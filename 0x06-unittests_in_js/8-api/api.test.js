@@ -1,28 +1,26 @@
-const request = require("request");
-const {describe, it} = require("mocha");
-const expect = require("chai").expect;
+// Import necessary modules: chai for assertions
+// and request to make HTTP requests to the server
+const chai = require('chai');
+const request = require('request');
+const expect = chai.expect; // Extract 'expect' for assertions
 
-describe("Index page", function() {
-    const options = {
-	url: "http://localhost:7865/",
-	method: "GET"
-    }
-    it("check correct status", function(done) {
-	request(options, function(err, res, body) {
-	    expect(res.statusCode).to.equal(200);
-	    done();
-	});
+// Test suite for the index page
+describe('Index page', () => {
+  // Test case: Checking the status code of the root route
+  it('Correct status code?', (done) => {
+    request.get('http://localhost:7865/', (error, response, body) => {
+      // Expect the status code to be 200 (OK)
+      expect(response.statusCode).to.equal(200);
+      done(); // Call done when the test finishes
     });
-    it("check correct content", function(done) {
-	request(options, function(err, res, body) {
-	    expect(body).to.contain("Welcome to the payment system");
-	    done();
-	});
+  });
+
+  // Test case: Checking the correct result (response body)
+  it('Correct result?', (done) => {
+    request.get('http://localhost:7865/', (error, response, body) => {
+      // Expect the response to be the welcome message
+      expect(body).to.equal('Welcome to the payment system');
+      done(); // Call done when the test finishes
     });
-    it("check correct content length", function(done) {
-	request(options, function(err, res, body) {
-	    expect(res.headers['content-length']).to.equal('29');
-	    done();
-	});
-    });
+  });
 });
